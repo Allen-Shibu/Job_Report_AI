@@ -61,9 +61,10 @@ func RunAgent(client openai.Client, companyName string) (string, error) {
 	// keeps running until model stops calling tools
 	for {
 		params := openai.ChatCompletionNewParams{
-			Model:    "openai/gpt-4o-mini",
-			Messages: messages,
-			Tools:    []openai.ChatCompletionToolUnionParam{webSearchToolDefinition},
+			Model:       "openai/gpt-4o-mini",
+			Messages:    messages,
+			Tools:       []openai.ChatCompletionToolUnionParam{webSearchToolDefinition},
+			Temperature: openai.Float(0.0),
 		}
 
 		res, err := client.Chat.Completions.New(ctx, params)
