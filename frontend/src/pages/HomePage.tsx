@@ -47,7 +47,14 @@ export default function HomePage() {
 
     await investigate(company, {
       onSearchStep: (step) => setSteps(prev => [...prev, step]),
-      onDone: (report: ReportData) => navigate('/report', { state: { report } }),
+      onDone: (report: ReportData) => {
+        if (report.overallScore === 0) {
+          setBrokenQuery(company)
+          setStatus('not_company')
+        } else {
+          navigate('/report', { state: { report } })
+        }
+      },
       onError: (msg) => { setStatus('error'); setError(msg) },
       onNotCompany: (query) => { setBrokenQuery(query); setStatus('not_company') },
     })

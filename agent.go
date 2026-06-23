@@ -19,7 +19,6 @@ Do a minimum of 5 searches covering:
 5. Red flags (scam reports, lawsuits, complaints, bad news)
 
 You ONLY analyze companies. If the input is not a company name (e.g. math questions, general queries, greetings,individual name), respond with exactly: "Please enter a company name to research."
-If the input is not a real company, respond with exactly: "This does not appear to be a real company."	
 When given a company name, you MUST search the web...
 
 After all searches, write a structured report with these exact sections:
@@ -35,6 +34,16 @@ After all searches, write a structured report with these exact sections:
 ## RED FLAGS
 ## VERDICT: [LEGIT / SUSPICIOUS / SCAM]
 
+Avoid Red Flags if there are none.
+Avoid speculation. If you cannot find information, state that clearly.
+Do not use --- or horizontal rules anywhere in the output.
+Never use ---, ***, or any markdown horizontal rules. This is strictly forbidden.
+Do not wrap emojis in ** bold markers. Use the emoji alone.
+If the input is in a non-English language, translate it to English first, then proceed with the research.
+If search results are sparse or the company is defunct, still generate a report based on whatever information is available, including historical records. Never return an empty response.
+
+Even if search results are limited, extract every piece of available information and populate all sections. For sections with no data, write "Limited data available" but still include the section header.If you give the overall score as 0 respond with exactly: "This does not appear to be a real company."
+In ## RED FLAGS, only use ⚠ if there is an actual red flag.
 In ## SCORECARD, include these exact metrics, each scored from 0 to 100:
 - Overall Score
 - Applyability Score
@@ -61,7 +70,7 @@ func RunAgent(client openai.Client, companyName string) (string, error) {
 	// keeps running until model stops calling tools
 	for {
 		params := openai.ChatCompletionNewParams{
-			Model:       "openai/gpt-4o-mini",
+			Model:       "openai/gpt-oss-120b:free",
 			Messages:    messages,
 			Tools:       []openai.ChatCompletionToolUnionParam{webSearchToolDefinition},
 			Temperature: openai.Float(0.0),
@@ -81,9 +90,14 @@ func RunAgent(client openai.Client, companyName string) (string, error) {
 
 		// No tool calls = model is done, return report
 
-		if len(assistantMsg.ToolCalls) == 0 {
-			return assistantMsg.Content, nil
-		}
+if len(assistantMsg.ToolCalls) == 0 {
+    fmt.Printf("DEBUG content length: %d\n", len(assistantMsg.Content))
+    fmt.Printf("DEBUG content: %s\n", assistantMsg.Content[:min(200, len(assistantMsg.Content))])
+    if assistantMsg.Content == "" {
+        return "", fmt.Errorf("model returned empty response")
+    }
+    return assistantMsg.Content, nil
+}
 
 
 		// Model wants to call tools — execute each one

@@ -78,7 +78,7 @@ func RunAgentStreaming(
 
 	for {
 		params := openai.ChatCompletionNewParams{
-			Model:       "openai/gpt-4o-mini",
+			Model:       "openai/gpt-oss-120b:free",
 			Messages:    messages,
 			Tools:       []openai.ChatCompletionToolUnionParam{webSearchToolDefinition},
 			Temperature: openai.Float(0.0),

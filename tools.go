@@ -52,7 +52,7 @@ func websearch(query string) (string, error) {
 		return "", fmt.Errorf("SERPER_API_KEY environment variable is not set")
 	}
 
-	body, err := json.Marshal(serperRequest{Query: query, Num: 3})
+	body, err := json.Marshal(serperRequest{Query: query, Num: 5})
 	if err != nil {
 		return "", fmt.Errorf("failed to marshal request body: %v", err)
 	}

@@ -14,7 +14,8 @@ export default function ReportPage() {
   // Detect general query or invalid input response from LLM
   const isGeneralQuery =
     report.rawReport?.includes('Please enter a company name to research.') ||
-    (!report.overview && report.scorecard.length === 0)
+    (report.scorecard.length === 0) ||
+    report.overallScore === 0
 
   if (isGeneralQuery) {
     return (
