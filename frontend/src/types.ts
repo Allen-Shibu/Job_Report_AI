@@ -41,8 +41,10 @@ export interface InvestigateState {
 // ─── Parser ─────────────────────────────────────────────────────────────────
 
 function extractSection(raw: string, heading: string): string {
-  const re = new RegExp(`##\\s*${heading}[^\n]*\n([\\s\\S]*?)(?=\n##|$)`, 'i')
-  const m = raw.match(re)
+  // Normalize CRLF → LF, then anchor headings to start of line (multiline flag)
+  const normalized = raw.replace(/\r\n/g, '\n')
+  const re = new RegExp(`^#{1,3}[ \t]*${heading}[^\n]*\n([\s\S]*?)(?=^#{1,3}[ \t]|$)`, 'im')
+  const m = normalized.match(re)
   return m ? m[1].trim() : ''
 }
 
@@ -63,7 +65,8 @@ function extractVerdict(raw: string): 'LEGIT' | 'SUSPICIOUS' | 'SCAM' {
 }
 
 function extractScores(raw: string): { metrics: ScoreMetric[]; overall: number } {
-  const section = extractSection(raw, 'SCORECARD')
+  // Normalize 'Work-Life' → 'Work Life' so the key always matches
+  const section = extractSection(raw, 'SCORECARD').replace(/Work-Life/gi, 'Work Life')
   const metrics: ScoreMetric[] = []
   let overall = 50
 
