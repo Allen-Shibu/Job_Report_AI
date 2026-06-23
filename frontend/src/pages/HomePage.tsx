@@ -231,14 +231,44 @@ export default function HomePage() {
             {status === 'error' && error && (
               <div
                 className="card anim-fade-up"
-                style={{ marginTop: 20, borderLeft: '3px solid var(--clr-scam)', width: '100%' }}
+                style={{ marginTop: 20, borderLeft: '3px solid var(--clr-amber)', width: '100%' }}
               >
-                <p style={{ fontFamily: 'var(--font-ui)', fontWeight: 600, fontSize: '0.85rem', color: 'var(--clr-scam)' }}>
-                  Investigation failed
+                <p style={{ fontFamily: 'var(--font-ui)', fontWeight: 600, fontSize: '0.85rem', color: 'var(--clr-amber)' }}>
+                  Service Temporarily Unavailable
                 </p>
-                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.76rem', color: 'var(--clr-muted)', marginTop: 7, lineHeight: 1.6 }}>
-                  {error}
+                <p style={{ fontFamily: 'var(--font-ui)', fontSize: '0.82rem', color: 'var(--clr-muted)', marginTop: 7, lineHeight: 1.7 }}>
+                  We're currently experiencing higher than usual demand on our investigation pipeline. Please wait a moment and try your search again — your query has not been lost.
                 </p>
+                <button
+                  id="retry-btn"
+                  onClick={resetToIdle}
+                  style={{
+                    marginTop: 16,
+                    fontFamily: 'var(--font-ui)',
+                    fontSize: '0.78rem',
+                    fontWeight: 600,
+                    letterSpacing: '0.04em',
+                    padding: '8px 20px',
+                    borderRadius: 50,
+                    border: '1px solid var(--clr-amber)',
+                    background: 'transparent',
+                    color: 'var(--clr-amber)',
+                    cursor: 'pointer',
+                    transition: 'background 0.18s, color 0.18s',
+                  }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLButtonElement
+                    el.style.background = 'var(--clr-amber)'
+                    el.style.color = '#0f0d08'
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLButtonElement
+                    el.style.background = 'transparent'
+                    el.style.color = 'var(--clr-amber)'
+                  }}
+                >
+                  Try again →
+                </button>
               </div>
             )}
           </div>
