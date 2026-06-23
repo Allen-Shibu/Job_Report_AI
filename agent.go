@@ -50,7 +50,7 @@ In ## SCORECARD, include these exact metrics, each scored from 0 to 100:
 - Salary Score
 - Employee Satisfaction Score
 - Benefits Score
-- Work-Life Balance Score
+- Work Life Balance Score
 - Career Growth Score
 
 For each metric, give a brief explanation of why you assigned that score.

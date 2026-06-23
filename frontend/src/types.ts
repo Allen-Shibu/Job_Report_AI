@@ -68,13 +68,13 @@ function extractScores(raw: string): { metrics: ScoreMetric[]; overall: number }
   let overall = 50
 
   const metricDefs = [
-    { key: 'Overall Score',              label: 'Overall' },
-    { key: 'Applyability Score',         label: 'Applyability' },
-    { key: 'Salary Score',               label: 'Salary' },
-    { key: 'Employee Satisfaction Score',label: 'Employee Satisfaction' },
-    { key: 'Benefits Score',             label: 'Benefits' },
-    { key: 'Work-Life Balance Score',    label: 'Work-Life Balance' },
-    { key: 'Career Growth Score',        label: 'Career Growth' },
+    { key: 'Overall Score',               label: 'Overall' },
+    { key: 'Applyability Score',          label: 'Applyability' },
+    { key: 'Salary Score',                label: 'Salary' },
+    { key: 'Employee Satisfaction Score', label: 'Employee Satisfaction' },
+    { key: 'Benefits Score',              label: 'Benefits' },
+    { key: 'Work Life Balance Score',      label: 'Work Life Balance' },
+    { key: 'Career Growth Score',         label: 'Career Growth' },
   ]
 
   for (const def of metricDefs) {
